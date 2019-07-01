@@ -1,5 +1,6 @@
 
 #include <Wire.h> 
+#include <elapsedMillis.h>
 
 int SensorPin1 = A1;              //analog pin 1 - Edge of drum
 int SensorPin2 = A2;              //analog pin 2 - Edge of drum
@@ -13,7 +14,7 @@ int sensorVelocity3 = 0;
 int sensorVelocity4 = 0;
 int sensorVelocity5 = 0;      
 
-int elapsedMillis timer = 0;
+elapsedMillis timer = 0;
 
 int notes[] = {65,65,69,65,65};    
 int prev_state[] = {0,0,0,0,0}; 
@@ -28,22 +29,18 @@ void setup(){
 }
 
 void getCurrentState() {
+
   new_state[0] = analogRead(SensorPin1) >= threshold ? analogRead(SensorPin1) : 0;        //Read pin 1
   new_state[1] = analogRead(SensorPin2) >= threshold ? analogRead(SensorPin2) : 0;        //Read pin 2
   new_state[2] = analogRead(SensorPin3) >= threshold ? analogRead(SensorPin3) : 0;        //Read pin 3
   new_state[3] = analogRead(SensorPin4) >= threshold ? analogRead(SensorPin4) : 0;        //Read pin 4
   new_state[4] = analogRead(SensorPin5) >= threshold ? analogRead(SensorPin5) : 0;        //Read pin 5
 
-  Serial.print(new_state[0]); 
-  Serial.print(", "); 
-  Serial.print(new_state[1]); 
-  Serial.print(", "); 
-  Serial.print(new_state[2]); 
-  Serial.print(", "); 
-  Serial.print(new_state[3]); 
-  Serial.print(", "); 
-  Serial.print(new_state[4]); 
-  Serial.print('\n'); 
+  Serial.println(new_state[0]);  
+  Serial.println(new_state[1]); 
+  Serial.println(new_state[2]); 
+  Serial.println(new_state[3]); 
+  Serial.println(new_state[4]); 
   
 }
  
@@ -62,17 +59,7 @@ void loop(){
   
   // Update our state
   memcpy(new_state,prev_state, sizeof(prev_state));
-    
-//  calculateVelocities(sensorReading1, sensorReading2, sensorReading3, sensorReading4, sensorReading5);
-//  sendNotes(sensorVelocity1, sensorVelocity2, sensorVelocity3, sensorVelocity4, sensorVelocity5);
-//  int sensorReading1 = analogRead(SensorPin1) >= threshold ? analogRead(SensorPin1) : 0;        //Read pin 1
-//  int sensorReading2 = analogRead(SensorPin2) >= threshold ? analogRead(SensorPin2) : 0;        //Read pin 2
-//  int sensorReading3 = analogRead(SensorPin3) >= threshold ? analogRead(SensorPin3) : 0;        //Read pin 3
-//  int sensorReading4 = analogRead(SensorPin4) >= threshold ? analogRead(SensorPin4) : 0;        //Read pin 4
-//  int sensorReading5 = analogRead(SensorPin5) >= threshold ? analogRead(SensorPin5) : 0;        //Read pin 5
-//  
-//  calculateVelocities(sensorReading1, sensorReading2, sensorReading3, sensorReading4, sensorReading5);
-//  sendNotes(sensorVelocity1, sensorVelocity2, sensorVelocity3, sensorVelocity4, sensorVelocity5);
+  
 }
 
 void check_drums(){
