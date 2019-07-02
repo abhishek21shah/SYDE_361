@@ -83,6 +83,30 @@ void getCurrentState() {
   Serial.print(new_state[4]); 
   Serial.print('\n'); 
 
+  FILE *out_file = fopen("user_test_session.txt", "w");
+
+  if (out_file == NULL) {
+    printf("Error! Could not open file\n"); 
+    exit(-1); // must include stdlib.h 
+  }
+
+  fprintf(out_file, new_state[0], 1); // write to file
+  fprintf(out_file, new_state[1], 2); // write to file
+  fprintf(out_file, new_state[2], 3); // write to file
+  fprintf(out_file, new_state[3], 4); // write to file
+  fprintf(out_file, new_state[4], 5); // write to file
+
+  fclose(out_file);
+
+  
+
+//  for (int x = 0; x < 5; x++) {
+//    fprintf(out_file, new_state[x], x+1); // write to file
+//  }
+//
+//  fclose(out_file);
+
+
 //    Serial.print("new: "); 
 //    Serial.println(new_state[0]);
 //    Serial.print("prev: "); 
