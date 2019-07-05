@@ -15,8 +15,11 @@ elapsedMillis timer = 0;
 int notes[] = {63,63,60,63,63};
 int prev_state[] = {0,0,0,0,0}; 
 int new_state[] = {0,0,0,0,0};
+
 int max1;
-int max2; 
+int max2;
+int r = 11;  // Radius from middle of senor 3 to outer sensors
+int arc = 17.2787; // One fourth arc distance between the outer sensors
 
 void setup(){
   Serial.begin(9600);
