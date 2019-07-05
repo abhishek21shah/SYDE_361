@@ -1,7 +1,6 @@
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-  Serial.write("Hellow workd");
 }
 
 int max1;
@@ -11,28 +10,37 @@ void BiLinear(int a, int b, int c, int d) {
   
   max1 = max(max(a,b), max(c,d));
 
-  if (max(a,b) < max(c,d)) {
-    if (max(a,b) > c || max(a,b) > d) {
+  if (max(a,b) < max(c,d)) 
+  {
+    if (max(a,b) > c || max(a,b) > d) 
+    {
       max2 = max(a,b);
     }  
-     else if (c > d){
+     else if (c > d)
+     {
        max2 = d;
      }
-     else {
+     else 
+     {
       max2 = c;
      }  
   }
-  else {
-    if (max(c,d) > a || max(c,d) > b) {
+  else 
+  {
+    if (max(c,d) > a || max(c,d) > b) 
+    {
       max2 = max(c,d);
     } 
-     else if (a > b){
+     else if (a > b) 
+     {
       max2 = b;
      }
-     else {
+     
+     else 
+     {
       max2 = a;
      }
-    }
+   }
 
   Serial.print(max1, max2);
 }
