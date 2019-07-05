@@ -14,21 +14,9 @@ elapsedMillis timer = 0;
 
 int notes[] = {63,63,60,63,63};
 int prev_state[] = {0,0,0,0,0}; 
-int new_state[] = {0,0,0,0,0}; 
-
-//int prev_1 = 0;
-//int prev_2 = 0;
-//int prev_3 = 0;
-//int prev_4 = 0;
-//int prev_5 = 0;
-//
-//int new_1 = 0;
-//int new_2 = 0;
-//int new_3 = 0;
-//int new_4 = 0;
-//int new_5 = 0;
-
-
+int new_state[] = {0,0,0,0,0};
+int max1;
+int max2; 
 
 void setup(){
   Serial.begin(9600);
@@ -48,16 +36,50 @@ void loop(){
     prev_state[i] = new_state[i];
    }
   }
-  
-  // Update our state
-  //memcpy(new_state,prev_state, sizeof(prev_state));
+}
 
-// for (int i = 0; i < 5; i++){
-//  prev_state[i] = new_state[i];
-// }
-    //prev_1 = new_1;
-    //new_1 = prev_1;
-    //Serial.println(new_1);
+
+void BiLinear(int a, int b, int c, int d) {
+  
+  max1 = max(max(a,b), max(c,d));
+
+  if (max(a,b) < max(c,d)) 
+  {
+    if (max(a,b) > c || max(a,b) > d) 
+    {
+      max2 = max(a,b);
+    }  
+     else if (c > d)
+     {
+       max2 = d;
+     }
+     else 
+     {
+      max2 = c;
+     }  
+  }
+  else 
+  {
+    if (max(c,d) > a || max(c,d) > b) 
+    {
+      max2 = max(c,d);
+    } 
+     else if (a > b) 
+     {
+      max2 = b;
+     }
+     
+     else 
+     {
+      max2 = a;
+     }
+   }
+
+  Serial.print(max1);
+  Serial.print(", ");
+  Serial.print(max2);
+  Serial.print('\n');
+ 
 }
 
 void getCurrentState() {
@@ -67,12 +89,6 @@ void getCurrentState() {
   new_state[3] = analogRead(SensorPin4) >= threshold ? analogRead(SensorPin4) : 0;        //Read pin 4
   new_state[4] = analogRead(SensorPin5) >= threshold ? analogRead(SensorPin5) : 0;        //Read pin 5
 
-// new_1 = analogRead(SensorPin1) >= threshold ? analogRead(SensorPin1) : 0;  
-// new_2 = analogRead(SensorPin2) >= threshold ? analogRead(SensorPin2) : 0;  
-// new_3 = analogRead(SensorPin3) >= threshold ? analogRead(SensorPin3) : 0;  
-// new_4 = analogRead(SensorPin4) >= threshold ? analogRead(SensorPin4) : 0;  
-// new_5 = analogRead(SensorPin5) >= threshold ? analogRead(SensorPin5) : 0;  
-
   Serial.print(new_state[0]); 
   Serial.print(", "); 
   Serial.print(new_state[1]); 
@@ -81,41 +97,16 @@ void getCurrentState() {
   Serial.print(", "); 
   Serial.print(new_state[3]); 
   Serial.print(", "); 
-  Serial.print(new_state[4]); 
-  Serial.print('\n'); 
-
-//  FILE *out_file = fopen("user_test_session.txt", "w");
-//
-//  if (out_file == NULL) {
-//    printf("Error! Could not open file\n"); 
-//    exit(-1); // must include stdlib.h 
-//  }
-//
-//    fprintf(new_state, sizeof(int), (sizeof)new_state, out_file); // write to file
-//
-//  fclose(out_file);
-
-
-//    Serial.print("new: "); 
-//    Serial.println(new_state[0]);
-//    Serial.print("prev: "); 
-//    Serial.println(prev_state[0]);
-  
+  Serial.print(new_state[4]);
+  Serial.print('\n');
+  BiLinear(new_state[0], new_state[1], new_state[3], new_state[4]);  
 }
 
 void check_drums(){
   for(int n = 0; n < 5; n++){
-//     Serial.print("new: "); 
-//     Serial.println(new_state[n]);
-//     Serial.print("old: "); 
-//     Serial.println(prev_state[n]);
      if((new_state[n] - prev_state[n] > 30) && (new_state[n] > 0)) {
        int vel = map(new_state[n], 0, 1023, 0, 127); 
        usbMIDI.sendNoteOn(notes[n], vel, channel);
-//       Serial.print("new: "); 
-//       Serial.println(new_state[n]);
-//       Serial.print("old: "); 
-//       Serial.println(prev_state[n]);
      } else { 
        usbMIDI.sendNoteOff(notes[n], 0, channel); 
      }   
