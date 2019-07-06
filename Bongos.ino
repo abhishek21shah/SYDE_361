@@ -13,6 +13,7 @@ int channel = 9;  // Defines the MIDI channel to send messages on
 elapsedMillis timer = 0;
 
 int notes[] = {63,63,60,63,63};
+int note;
 int prev_state[] = {0,0,0,0,0}; 
 int new_state[] = {0,0,0,0,0};
 
@@ -127,16 +128,19 @@ void BiLinear(int a, int b, int c, int d, int e) {
     if (cc <= 4.0)
     {
       //play zone 1 sound
+      note = 60;
       Serial.println("Zone 1 Sound biatchhhh");
     }
     else if ( cc >= 4.01 && cc <= 7.0)
     {
       //play zone 2 sound
+      note = 90;
       Serial.println("Zone 2 Sound biatchhhh");
     }
     else if ( cc >= 7.01)
     {
       //play zone 3 sound
+      note = 120;
       Serial.println("Zone 3 Sound biatchhhh");
     }
     else {
@@ -171,9 +175,9 @@ void check_drums(){
   for(int n = 0; n < 5; n++){
      if((new_state[n] - prev_state[n] > 30) && (new_state[n] > 0)) {
        int vel = map(new_state[n], 0, 1023, 0, 127); 
-       usbMIDI.sendNoteOn(notes[n], vel, channel);
+       usbMIDI.sendNoteOn(note, vel, channel);
      } else { 
-       usbMIDI.sendNoteOff(notes[n], 0, channel); 
+       usbMIDI.sendNoteOff(note, 0, channel); 
      }   
   }
 }
