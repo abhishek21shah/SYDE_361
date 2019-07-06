@@ -18,8 +18,8 @@ int new_state[] = {0,0,0,0,0};
 
 int max1;
 int max2;
-int r = 11;  // Radius from middle of senor 3 to outer sensors
-int arc = 17.2787; // One fourth arc distance between the outer sensors
+const double r = 11.0;  // Radius from middle of senor 3 to outer sensors
+const double arc = 17.2787; // One fourth arc distance between the outer sensors
 
 void setup(){
   Serial.begin(9600);
@@ -41,8 +41,7 @@ void loop(){
   }
 }
 
-
-void BiLinear(int a, int b, int c, int d) {
+void BiLinear(int a, int b, int c, int d, int e) {
   
   max1 = max(max(a,b), max(c,d));
 
@@ -78,11 +77,73 @@ void BiLinear(int a, int b, int c, int d) {
      }
    }
 
-  Serial.print(max1);
-  Serial.print(", ");
-  Serial.print(max2);
-  Serial.print('\n');
- 
+  double bb = (max1*arc) / (max1 + max2);
+  double f_avg = (arc*max1 - bb*max1 + bb*max2) / arc;
+  double cc = (r*f_avg) / (f_avg + new_state[2]);
+
+  if (max1 != 0 && max2 != 0 && bb != 0 && f_avg != 0)
+  {
+    Serial.print(max1);
+    Serial.print(", ");
+    Serial.print(max2);
+    Serial.print(", ");
+    Serial.print(bb);
+    Serial.print(", ");
+    Serial.print(f_avg);
+    Serial.print(", ");
+    Serial.print(cc);
+    Serial.println();
+  }
+
+  if (a != 0 && b == 0 && e == 0 && c == 0 && d == 0) {
+      cc = 11.0;
+    }
+    else if (a == 0 && b != 0 && e == 0 && c == 0 && d == 0) {
+      cc = 11.0;
+    }
+    else if (a == 0 && b == 0 && e == 0 && c != 0 && d == 0) {
+      cc = 11.0;
+    }
+    else if (a == 0 && b == 0 && e == 0 && c == 0 && d != 0) {
+      cc = 11.0;
+    }
+    else if (a == 0 && b == 0 && e != 0 && c == 0 && d == 0) {
+      cc = 0.0;
+    }
+
+    if (a != 0 && b == 0 && e != 0 && c == 0 && d == 0) {
+      cc = r*max1 / (max1 + e); 
+    }
+    else if (a == 0 && b != 0 && e != 0 && c == 0 && d == 0) {
+      cc = r*max1 / (max1 + e); 
+    }
+    else if (a == 0 && b == 0 && e != 0 && c != 0 && d == 0) {
+      cc = r*max1 / (max1 + e); 
+    }
+    else if (a == 0 && b == 0 && e != 0 && c == 0 && d != 0) {
+      cc = r*max1 / (max1 + e); 
+    }
+
+    if (cc <= 4.0)
+    {
+      //play zone 1 sound
+      Serial.println("Zone 1 Sound biatchhhh");
+    }
+    else if ( cc >= 4.01 && cc <= 7.0)
+    {
+      //play zone 2 sound
+      Serial.println("Zone 2 Sound biatchhhh");
+    }
+    else if ( cc >= 7.01)
+    {
+      //play zone 3 sound
+      Serial.println("Zone 3 Sound biatchhhh");
+    }
+    else {
+      Serial.println("No sound");
+    }
+    
+  Serial.println(cc);
 }
 
 void getCurrentState() {
@@ -102,7 +163,8 @@ void getCurrentState() {
   Serial.print(", "); 
   Serial.print(new_state[4]);
   Serial.print('\n');
-  BiLinear(new_state[0], new_state[1], new_state[3], new_state[4]);  
+  BiLinear(new_state[0], new_state[1], new_state[3], new_state[4], new_state[2]);
+    
 }
 
 void check_drums(){
