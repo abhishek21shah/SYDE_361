@@ -9,7 +9,6 @@
 - `const int threshold = 30`: Minimum force reading from sensors to produce a sound
 - `int channel = 9`: MIDI channel to send messages on
 - `ellapsedMillis timer = 0`:
-- `int notes[] = {63,63,60,63,63}`:
 - `int notes[] = {60,90,120}`: MIDI note numbers corresponding to Zones 1, 2 and 3, respectively
 - `int note`:
 - `int prev_state[] = {0,0,0,0,0}`:
