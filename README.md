@@ -17,5 +17,7 @@
 - `const double arc = 17.2787`: One fourth arc distance between the outer sensors
 
 ## Bongos.scd
+- Defines our bongo synth sound
+- Contains a callback function that receives MIDI noteOn messages and plays the note
 
 ## elapsedMillis.h
