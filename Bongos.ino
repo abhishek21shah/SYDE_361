@@ -7,12 +7,12 @@
 #define SensorPin4 A4
 #define SensorPin5 A5 
 
-const int threshold = 30;  //subject to change
+const int threshold = 30;
 int channel = 9;  // Defines the MIDI channel to send messages on
 
 elapsedMillis timer = 0;
 
-int notes[] = {63,63,60,63,63};
+int notes[] = {60,90,120}; // To be changed
 int note;
 int prev_state[] = {0,0,0,0,0}; 
 int new_state[] = {0,0,0,0,0};
@@ -128,19 +128,19 @@ void BiLinear(int a, int b, int c, int d, int e) {
     if (cc <= 4.0)
     {
       //play zone 1 sound
-      note = 60;
+      note = notes[0];
       Serial.println("Zone 1 Sound");
     }
     else if ( cc >= 4.01 && cc <= 7.0)
     {
       //play zone 2 sound
-      note = 90;
+      note = notes[1];
       Serial.println("Zone 2 Sound");
     }
     else if ( cc >= 7.01)
     {
       //play zone 3 sound
-      note = 120;
+      note = notes[2];
       Serial.println("Zone 3 Sound");
     }
     else {
