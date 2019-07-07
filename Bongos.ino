@@ -129,19 +129,19 @@ void BiLinear(int a, int b, int c, int d, int e) {
     {
       //play zone 1 sound
       note = 60;
-      Serial.println("Zone 1 Sound biatchhhh");
+      Serial.println("Zone 1 Sound");
     }
     else if ( cc >= 4.01 && cc <= 7.0)
     {
       //play zone 2 sound
       note = 90;
-      Serial.println("Zone 2 Sound biatchhhh");
+      Serial.println("Zone 2 Sound");
     }
     else if ( cc >= 7.01)
     {
       //play zone 3 sound
       note = 120;
-      Serial.println("Zone 3 Sound biatchhhh");
+      Serial.println("Zone 3 Sound");
     }
     else {
       Serial.println("No sound");
