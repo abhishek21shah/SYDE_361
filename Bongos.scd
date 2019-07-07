@@ -27,6 +27,7 @@ SynthDef(\Bongo,
 );
 
 Synth(\Bongo) // Centre zone
+Synth(\Bongo, [\amp, 25.4])
 Synth(\Bongo, [\sustain, 0.7])
 Synth(\Bongo, [\freq, 98])  // Middle zone
 Synth(\Bongo, [\freq, 96])  // Outer zone
@@ -34,26 +35,19 @@ Synth(\Bongo, [\freq, 96])  // Outer zone
 ///////////////////////////////////////////
 
 (
-var radius = 10; // To be retrieved from BiLinear function?
-var frequency, notes, on, off;
+var notes, on, off;
 notes = Array.newClear(128);
-
-if ((radius >= 0) && (radius < 4), { frequency = 100; },
-	if ((radius >= 4) && (radius < 7), { frequency = 98; },
-		if (radius >= 7, { frequency = 96; },)));
 
 // MIDIClient.init; // Posts list of available devices
 MIDIIn.connectAll;
 
-on = MIDIFunc.noteOn({ |velocity, num, channel|
-	notes[num] = Synth(\Bongo, [\freq, frequency, \amp, velocity *  0.00315]);
-	[\velocity,velocity, \num,num, \freq,frequency, \channel, channel].postln;
-	// What effects do num and freq have?
-
+on = MIDIFunc.noteOn({ |velocity, midinote, channel|
+	notes[midinote] = Synth(\Bongo, [\freq, midinote.midicps, \amp, velocity * 0.2]);
+	[\velocity,velocity, \midinote,midinote, \freq,midinote.midicps, \channel, channel].postln;
 });
 
-off = MIDIFunc.noteOff({ |velocity, num, channel|
-	notes[num].release;
+off = MIDIFunc.noteOff({ |velocity, midinote, channel|
+	notes[midinote].release;
 });
 
 q = { on.free; off.free; };
