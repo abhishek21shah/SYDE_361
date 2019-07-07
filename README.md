@@ -1,6 +1,6 @@
 # SYDE_361
 
-### Software Flow
+## Bongos.ino
 
 - Sensor(s) Triggered
 `Read and store sensor values from the five pins`
@@ -8,8 +8,15 @@
 `Filter out all sensors below the threshold value`
 - Store the filtered sensor readings
 
-### Global Variables
+#### Global Variables
+- `const int threshold = 30`: Minimum force reading from sensors to produce a sound
+- `int channel = 9`: MIDI channel to send messages on
+- `ellapsedMillis timer = 0`:
+- `int notes[] = {63,63,60,63,63}`:
+- `int note`:
+- `int prev_state[] = {0,0,0,0,0}`:
+- `int new_state[] = {0,0,0,0,0}`:
 
-- Number of pins = 5
-- Threshold = (verify via testing)
-- Initial_Force_readings => There will be an initial sensor reading that needs to be excluded during calculations
+## Bongos.scd
+
+## elapsedMillis.h
