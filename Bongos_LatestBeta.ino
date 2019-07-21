@@ -65,8 +65,6 @@ void determineLocation() {
        number_of_sensors_triggered_Z3+=1; 
     }
   } 
-
-  Serial.println(number_of_sensors_triggered_Z2);
   
   if ((new_state[8]) > threshold) 
   { 
