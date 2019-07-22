@@ -52,8 +52,8 @@ void determineLocation() {
   int zone3[] = {0,0,0,0};
   
   for (int x = 0; x < 4; x++) {
-    zone2[x] = new_state[x+4];
-    zone3[x] = new_state[x];
+    zone2[x] = new_state[x+4] - prev_state[x+4];
+    zone3[x] = new_state[x] - prev_state[x];
   }
   
   for (int i = 0; i < 4; i++) {
@@ -66,33 +66,39 @@ void determineLocation() {
     }
   } 
   
-  if ((new_state[8]) > threshold) 
+  if ((new_state[8] - prev_state[8]) > threshold )
   { 
     number_of_sensors_triggered_Z1 = 1; 
   }
     
   if ((number_of_sensors_triggered_Z2 > 0) && (number_of_sensors_triggered_Z3 > 0) && (number_of_sensors_triggered_Z1 > 0)) { // All 3 are triggered
     note = 43;
+    Serial.println("all 3");
   }
 
   if ((number_of_sensors_triggered_Z2 > 0) && (number_of_sensors_triggered_Z3 > 0) && (number_of_sensors_triggered_Z1 == 0)) { // z2 and z3 are triggered
     note = 39;
+    Serial.println("z2 and z3");
   }
 
   if ((number_of_sensors_triggered_Z2 > 0) && (number_of_sensors_triggered_Z3 == 0) && (number_of_sensors_triggered_Z1 > 0)) { // z2 and z1 are triggered
     note = 41;
+    Serial.println("z1 and z2");
   }
 
   if ((number_of_sensors_triggered_Z2 > 0) && (number_of_sensors_triggered_Z3 == 0) && (number_of_sensors_triggered_Z1 == 0)) { // ONLY z2 is triggered
     note = 40;
+    Serial.println("z2");
   }
 
   if ((number_of_sensors_triggered_Z2 == 0) && (number_of_sensors_triggered_Z3 > 0) && (number_of_sensors_triggered_Z1 == 0)) { // ONLY z3 is triggered
     note = 38;
+    Serial.println("z3");
   }
 
   if ((number_of_sensors_triggered_Z2 == 0) && (number_of_sensors_triggered_Z3 == 0) && (number_of_sensors_triggered_Z1 > 0)) { // ONLY z1 is triggered
     note = 42;
+    Serial.println("z1");
   }
   
 }
