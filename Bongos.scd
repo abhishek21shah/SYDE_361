@@ -30,11 +30,9 @@ Synth(\Bongo) // Centre zone
 Synth(\Bongo, [\amp, 5.4])
 Synth(\Bongo, [\sustain, 0.7])
 
-Synth(\Bongo, [\freq, 92.5, \amp, 0.2])  // Middle zone
-Synth(\Bongo, [\freq, 82.4, \amp, 0.2])  // Off center zone
-Synth(\Bongo, [\freq, 73.4, \amp, 0.2])  // Middle zone
-
-Synth(\Bongo, [\freq, 96])  // Outer zone
+Synth(\Bongo, [\freq, 92.5, \amp, 0.5])  // Middle zone (42)
+Synth(\Bongo, [\freq, 82.4, \amp, 0.5])  // Off center zone (40)
+Synth(\Bongo, [\freq, 73.4, \amp, 0.5])  // Outer zone (38)
 
 ///////////////////////////////////////////
 
@@ -46,7 +44,7 @@ notes = Array.newClear(128);
 MIDIIn.connectAll;
 
 on = MIDIFunc.noteOn({ |velocity, midinote, channel|
-	notes[midinote] = Synth(\Bongo, [\freq, midinote.midicps, \amp, velocity * 0.00315]);
+	notes[midinote] = Synth(\Bongo, [\freq, midinote.midicps, \amp, velocity * 0.2]);
 	[\velocity,velocity, \midinote,midinote, \freq,midinote.midicps, \channel, channel].postln;
 });
 
