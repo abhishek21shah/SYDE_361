@@ -77,7 +77,6 @@ void determineLocation()
   { 
     number_of_sensors_triggered_Z1 = 1; 
   }
-<<<<<<< HEAD
 
   if ((number_of_sensors_triggered_Z2 == 0) && (number_of_sensors_triggered_Z3 == 0) && (number_of_sensors_triggered_Z1 > 0)) { // ONLY z1 is triggered
     note = 38; // F2#
@@ -107,43 +106,6 @@ void determineLocation()
   if ((number_of_sensors_triggered_Z2 > 0) && (number_of_sensors_triggered_Z3 > 0) && (number_of_sensors_triggered_Z1 > 0)) { // All 3 are triggered
     note = 43; // G2
     Serial.println("all 3");
-=======
-    
-  if ((number_of_sensors_triggered_Z2 > 0) && (number_of_sensors_triggered_Z3 > 0) && (number_of_sensors_triggered_Z1 > 0))       // All 3 are triggered
-  {     
-    note = 43;
-    Serial.println("all 3");
-  }
-
-  if ((number_of_sensors_triggered_Z2 > 0) && (number_of_sensors_triggered_Z3 > 0) && (number_of_sensors_triggered_Z1 == 0))      // z2 and z3 are triggered
-  { 
-    note = 39;
-    Serial.println("z2 and z3");
-  }
-
-  if ((number_of_sensors_triggered_Z2 > 0) && (number_of_sensors_triggered_Z3 == 0) && (number_of_sensors_triggered_Z1 > 0))      // z2 and z1 are triggered
-  {
-    note = 41;
-    Serial.println("z1 and z2");
-  }
-
-  if ((number_of_sensors_triggered_Z2 > 0) && (number_of_sensors_triggered_Z3 == 0) && (number_of_sensors_triggered_Z1 == 0))     // ONLY z2 is triggered
-  { 
-    note = 40;
-    Serial.println("z2");
-  }
-
-  if ((number_of_sensors_triggered_Z2 == 0) && (number_of_sensors_triggered_Z3 > 0) && (number_of_sensors_triggered_Z1 == 0))     // ONLY z3 is triggered
-  { 
-    note = 38;
-    Serial.println("z3");
-  }
-
-  if ((number_of_sensors_triggered_Z2 == 0) && (number_of_sensors_triggered_Z3 == 0) && (number_of_sensors_triggered_Z1 > 0))     // ONLY z1 is triggered
-  { 
-    note = 42;
-    Serial.println("z1");
->>>>>>> bec3c3f72fa353a74de2ae8a09d7e1c5aa57bd09
   }
 }
 
