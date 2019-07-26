@@ -30,9 +30,9 @@ Synth(\Bongo) // Centre zone
 Synth(\Bongo, [\amp, 5.4])
 Synth(\Bongo, [\sustain, 0.7])
 
-Synth(\Bongo, [\freq, 92.5, \amp, 1.0])  // Middle zone (38)
+Synth(\Bongo, [\freq, 73.4, \amp, 1.0])  // Middle zone (38)
 Synth(\Bongo, [\freq, 82.4, \amp, 1.0])  // Off center zone (40)
-Synth(\Bongo, [\freq, 73.4, \amp, 1.0])  // Outer zone (42)
+Synth(\Bongo, [\freq, 92.5, \amp, 1.0])  // Outer zone (42)
 
 ///////////////////////////////////////////
 
