@@ -1,8 +1,11 @@
+// Boots the server - must run first
 (
 Server.default=s=Server.internal;
 s.boot;
 )
 
+// Modified from DrumSynths SC Example - SOS Drums by Renick Bell
+// Defines our custom bongo synth
 (
 SynthDef(\Bongo,
 	{arg out = 0, sustain = 0.4, drum_mode_level = 0.25,
@@ -26,34 +29,40 @@ SynthDef(\Bongo,
 ).add
 );
 
-Synth(\Bongo) // Centre zone
-Synth(\Bongo, [\amp, 5.4])
-Synth(\Bongo, [\sustain, 0.7])
+// To test the default synth sound
+Synth(\Bongo)
 
-Synth(\Bongo, [\freq, 73.4, \amp, 1.0])  // Middle zone (38)
-Synth(\Bongo, [\freq, 82.4, \amp, 1.0])  // Off center zone (40)
-Synth(\Bongo, [\freq, 92.5, \amp, 1.0])  // Outer zone (42)
+// For playback exercise during user testing, run these lines of code
+Synth(\Bongo, [\freq, 73.4, \amp, 1.0])  // Middle zone (MIDI note 38)
+Synth(\Bongo, [\freq, 82.4, \amp, 1.0])  // Off center zone (MIDI note 40)
+Synth(\Bongo, [\freq, 92.5, \amp, 1.0])  // Outer zone (MIDI note 42)
 
-///////////////////////////////////////////
-
+// Receives MIDI messages from the Teensy and turns notes on or off
+// Frequency depends on frequency of the MIDI note received
+// Amplitude depends on MIDI velocity received (multiplied by a scaling factor of 0.02)
+// http://doc.sccode.org/Guides/UsingMIDI.html
 (
 var notes, on, off;
-notes = Array.newClear(128);
+notes = Array.newClear(128); // To store the states of all notes
 
-// MIDIClient.init; // Posts list of available devices
-MIDIIn.connectAll;
+MIDIIn.connectAll; // Connects to all possible MIDI inputs
 
+// Play note when noteOn message is received
 on = MIDIFunc.noteOn({ |velocity, midinote, channel|
-	notes[midinote] = Synth(\Bongo, [\freq, midinote.midicps, \amp, velocity * 0.2]);
+	notes[midinote] = Synth(\Bongo, [\freq, midinote.midicps, \amp, velocity * 0.02]);
+
+	// Print the values for debugging
 	[\velocity,velocity, \midinote,midinote, \freq,midinote.midicps, \channel, channel].postln;
 });
 
+// Stop playing note when noteOff message is received
 off = MIDIFunc.noteOff({ |velocity, midinote, channel|
 	notes[midinote].release;
 });
 
+// Function that frees the nodes so they can be used again
 q = { on.free; off.free; };
 )
 
-// when done:
+// When done, run q
 q.value;
