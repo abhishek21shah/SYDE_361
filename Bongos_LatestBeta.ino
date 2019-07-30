@@ -44,7 +44,7 @@ void loop()
      }
   }
 }                                                 // End Loop
-you 
+
 void determineLocation() 
 {
   int number_of_sensors_triggered_Z1 = 0;                     // Track the number of sensors triggered in zone 1  
